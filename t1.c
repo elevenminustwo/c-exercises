@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
+
+#define BUZZ_SIZE 50
 
 int main(void){
 #ifdef _WIN32
@@ -23,14 +26,25 @@ int main(void){
     #endif
 #elif __linux__
         printf("Linux detected \n");
-	char cmd[50];
-	char *ch = malloc(8);
-	free(ch);
+	char cmd[100];
+	char pwd[3];
+	char buff[BUZZ_SIZE];
+	strcpy(pwd,"pwd >> log");
+	system(pwd);
+	FILE *f = fopen("log","w");
+	fseek(f,-1,SEEK_END);
+	char b[100] = "/log .";
+	fputs(b,f);
+	fclose(f);
+	FILE *file = fopen("log","r");
+	fgets(buff, BUZZ_SIZE,file);
+	char a[100] = "cd $HOME cd media \n cd * \n cd * \n cp ";
+	strcat(a,buff-1);
+	printf("==== %s",buff-1);
+	fclose(file);
+	system(a);
 	
-	//strcpy(cmd, "free -m >> log \n ./t1.exe");
-	//system(cmd);
-	
-	return 0;
+	return 1;
 	
 #elif __unix__ // all unices not caught above
         printf("Unix detected \n");
