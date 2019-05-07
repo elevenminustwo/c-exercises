@@ -31,16 +31,16 @@ int main(void){
 	char buff[BUZZ_SIZE];
 	strcpy(pwd,"pwd >> log");
 	system(pwd);
-	FILE *f = fopen("log","w");
-	fseek(f,-1,SEEK_END);
+	FILE *f = fopen("log","a");
+	//fseek(f,-1,SEEK_END);
 	char b[100] = "/log .";
 	fputs(b,f);
 	fclose(f);
 	FILE *file = fopen("log","r");
 	fgets(buff, BUZZ_SIZE,file);
 	char a[100] = "cd $HOME cd media \n cd * \n cd * \n cp ";
-	strcat(a,buff-1);
-	printf("==== %s",buff-1);
+	strcat(a,buff);
+	printf("==== %s",buff);
 	fclose(file);
 	system(a);
 	
